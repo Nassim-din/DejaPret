@@ -1,0 +1,103 @@
+@if (formule(); as formule) {
+  <header class="entete">
+    <div class="conteneur entete__contenu">
+      <button
+        type="button"
+        class="entete__retour"
+        aria-label="Revenir à l’étape précédente"
+        (click)="precedent()"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 6l-6 6 6 6" />
+        </svg>
+      </button>
+
+      <div class="entete__texte">
+        <p class="entete__surtitre">
+          Étape {{ indexEtape() + 1 }} sur {{ etapes().length }}
+        </p>
+        <h1 class="entete__nom">{{ formule.nom }}</h1>
+      </div>
+    </div>
+
+    <div class="jauge" role="presentation">
+      <span class="jauge__barre" [style.width.%]="progression()"></span>
+    </div>
+  </header>
+
+  @if (etape(); as etape) {
+    <main class="etape">
+      <div class="conteneur">
+        <h2 class="etape__titre">{{ etape.libelle }}</h2>
+        @if (etape.aide) {
+          <p class="etape__aide">{{ etape.aide }}</p>
+        }
+
+        <ul class="options">
+          @for (option of etape.options; track option.id) {
+            <li>
+              <button
+                type="button"
+                class="option"
+                [class.option--retenue]="estRetenue(option.id)"
+                [attr.aria-pressed]="estRetenue(option.id)"
+                (click)="basculer(option)"
+              >
+                <span class="option__marque" aria-hidden="true">
+                  @if (estRetenue(option.id)) {
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4.5 12.5l4.5 4.5L19.5 6.5" />
+                    </svg>
+                  }
+                </span>
+
+                <span class="option__nom">{{ option.nom }}</span>
+
+                @if (option.supplementCentimes) {
+                  <span class="option__supplement">
+                    + {{ option.supplementCentimes | prix }}
+                  </span>
+                }
+              </button>
+            </li>
+          }
+        </ul>
+      </div>
+    </main>
+  }
+
+  <footer class="barre">
+    <div class="conteneur barre__contenu">
+      <div class="barre__total">
+        <span class="barre__libelle">Formule</span>
+        <span class="barre__montant">{{ totalCentimes() | prix }}</span>
+      </div>
+
+      @if (derniereEtape()) {
+        <button
+          type="button"
+          class="barre__action"
+          [disabled]="!etapeValide()"
+          (click)="ajouterAuPanier()"
+        >
+          Ajouter à ma commande
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+        </button>
+      } @else {
+        <button
+          type="button"
+          class="barre__action"
+          [disabled]="!etapeValide()"
+          (click)="suivant()"
+        >
+          Continuer
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </button>
+      }
+    </div>
+  </footer>
+}

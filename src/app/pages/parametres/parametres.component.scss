@@ -1,0 +1,472 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: var(--c-fond);
+  color: var(--c-marque);
+}
+
+.parametres {
+  flex-grow: 1;
+  padding: 20px 0 32px;
+}
+
+.disponibilite {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  border: 1px solid color-mix(in oklab, var(--c-marque) 14%, var(--c-fond));
+  border-radius: 16px;
+  background: color-mix(in oklab, var(--c-fond) 88%, #fff);
+
+  &--ferme {
+    border-color: #7d2b1c;
+    background: #fdf2ee;
+    color: #5c1f14;
+  }
+
+  &__texte {
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  &__titre {
+    margin: 0;
+    font-family: var(--police-titre);
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  &__note {
+    margin: 3px 0 0;
+    font-size: 12.5px;
+    opacity: 0.75;
+  }
+}
+
+.bascule {
+  flex-shrink: 0;
+  height: 44px;
+  padding: 0 18px;
+  border: 1.5px solid currentcolor;
+  border-radius: 22px;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.notifications {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 620px;
+  margin-top: 12px;
+  padding: 16px 18px;
+  border: 1px solid color-mix(in oklab, var(--c-marque) 14%, var(--c-fond));
+  border-radius: 16px;
+  background: color-mix(in oklab, var(--c-fond) 88%, #fff);
+
+  &__texte {
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  &__titre {
+    margin: 0;
+    font-family: var(--police-titre);
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  &__note {
+    margin: 3px 0 0;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: color-mix(in oklab, var(--c-marque) 60%, var(--c-fond));
+  }
+}
+
+.onglets {
+  display: flex;
+  gap: 8px;
+  margin: 22px 0 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.onglet {
+  flex-shrink: 0;
+  height: 40px;
+  padding: 0 14px;
+  border: 1.5px solid color-mix(in oklab, var(--c-marque) 18%, var(--c-fond));
+  border-radius: 20px;
+  background: transparent;
+  color: var(--c-marque);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &--actif {
+    background: var(--c-marque);
+    border-color: var(--c-marque);
+    color: var(--c-fond);
+  }
+}
+
+.confirmation {
+  margin: 0 0 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--c-accent) 20%, var(--c-fond));
+  font-size: 13px;
+  font-weight: 600;
+  color: color-mix(in oklab, var(--c-accent) 60%, #2a1f0c);
+}
+
+.bloc {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 620px;
+
+  &__aide {
+    margin: 0;
+    font-size: 13px;
+    color: color-mix(in oklab, var(--c-marque) 60%, var(--c-fond));
+  }
+}
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  &--pleine {
+    margin-top: 12px;
+    max-width: 620px;
+  }
+
+  &__libelle {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, var(--c-marque) 62%, var(--c-fond));
+  }
+
+  &__saisie {
+    height: 50px;
+    padding: 0 14px;
+    border: 1.5px solid color-mix(in oklab, var(--c-marque) 20%, var(--c-fond));
+    border-radius: 13px;
+    background: color-mix(in oklab, var(--c-fond) 88%, #fff);
+    color: var(--c-marque);
+    font-family: inherit;
+    font-size: 15.5px;
+
+    &:focus {
+      border-color: var(--c-accent);
+      outline: none;
+    }
+  }
+
+  &__zone {
+    padding: 12px 14px;
+    border: 1.5px solid color-mix(in oklab, var(--c-marque) 20%, var(--c-fond));
+    border-radius: 13px;
+    background: color-mix(in oklab, var(--c-fond) 88%, #fff);
+    color: var(--c-marque);
+    font-family: inherit;
+    font-size: 15px;
+    resize: vertical;
+
+    &:focus {
+      border-color: var(--c-accent);
+      outline: none;
+    }
+  }
+}
+
+.valider,
+.produit__valider,
+.reinitialiser {
+  height: 50px;
+  border: 0;
+  border-radius: 25px;
+  background: var(--c-accent);
+  color: var(--c-marque);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.valider {
+  align-self: flex-start;
+  padding: 0 26px;
+}
+
+.reinitialiser {
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 0 22px;
+  border: 1.5px solid color-mix(in oklab, var(--c-marque) 20%, var(--c-fond));
+  background: none;
+  color: var(--c-marque);
+  font-weight: 600;
+}
+
+.produit {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid color-mix(in oklab, var(--c-marque) 14%, var(--c-fond));
+  border-radius: 14px;
+
+  &__prix {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    input {
+      flex-grow: 1;
+      min-width: 0;
+    }
+  }
+
+  &__euro {
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  &__valider {
+    height: 44px;
+    padding: 0 18px;
+    border-radius: 22px;
+    font-size: 13.5px;
+  }
+}
+
+@media (min-width: 640px) {
+  .produit {
+    grid-template-columns: 1fr 150px auto;
+    align-items: center;
+  }
+}
+
+.horaire {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in oklab, var(--c-marque) 14%, var(--c-fond));
+  border-radius: 14px;
+
+  &--ferme {
+    opacity: 0.62;
+  }
+
+  &__jour {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-grow: 1;
+    min-width: 140px;
+    padding: 6px 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: 14.5px;
+    font-weight: 600;
+    text-align: left;
+    text-transform: capitalize;
+    cursor: pointer;
+  }
+
+  &__temoin {
+    width: 34px;
+    height: 20px;
+    border-radius: 10px;
+    background: color-mix(in oklab, var(--c-marque) 22%, var(--c-fond));
+    position: relative;
+    transition: background 120ms ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 14px;
+      height: 14px;
+      border-radius: 7px;
+      background: var(--c-fond);
+      transition: transform 120ms ease;
+    }
+  }
+
+  &:not(&--ferme) &__temoin {
+    background: var(--c-accent);
+
+    &::after {
+      transform: translateX(14px);
+    }
+  }
+
+  &__plage {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    input {
+      height: 44px;
+      padding: 0 10px;
+    }
+  }
+
+  &__ferme {
+    font-size: 13px;
+    font-weight: 600;
+  }
+}
+
+.coupee {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  max-width: 620px;
+  margin-top: 24px;
+  padding: 18px;
+  border: 1.5px solid #7d2b1c;
+  border-radius: 18px;
+  background: #fdf2ee;
+  color: #5c1f14;
+
+  svg {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    margin-top: 2px;
+  }
+
+  &__titre {
+    margin: 0;
+    font-family: var(--police-titre);
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  &__texte {
+    margin: 6px 0 0;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+}
+
+.lien-public {
+  max-width: 620px;
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid color-mix(in oklab, var(--c-marque) 14%, var(--c-fond));
+  border-radius: 18px;
+  background: color-mix(in oklab, var(--c-fond) 88%, #fff);
+
+  &__titre {
+    margin: 0;
+    font-family: var(--police-titre);
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  &__aide {
+    margin: 4px 0 16px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: color-mix(in oklab, var(--c-marque) 60%, var(--c-fond));
+  }
+
+  &__corps {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  &__qr {
+    flex-shrink: 0;
+    width: 116px;
+    padding: 8px;
+    border-radius: 12px;
+    background: #fff;
+    color: var(--c-marque);
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-grow: 1;
+    min-width: 220px;
+  }
+
+  &__url {
+    margin: 0;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: color-mix(in oklab, var(--c-marque) 7%, var(--c-fond));
+    font-size: 13px;
+    word-break: break-all;
+  }
+
+  &__boutons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 18px;
+  border: 1.5px solid color-mix(in oklab, var(--c-marque) 20%, var(--c-fond));
+  border-radius: 22px;
+  background: none;
+  color: var(--c-marque);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+
+  &--principal {
+    border-color: var(--c-accent);
+    background: var(--c-accent);
+    font-weight: 700;
+  }
+}
+
+.note-apparence {
+  max-width: 620px;
+  margin: 26px 0 0;
+  padding: 12px 14px;
+  border: 1px dashed color-mix(in oklab, var(--c-marque) 28%, var(--c-fond));
+  border-radius: 12px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: color-mix(in oklab, var(--c-marque) 62%, var(--c-fond));
+}

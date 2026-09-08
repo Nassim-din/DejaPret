@@ -1,0 +1,275 @@
+<app-entete-commercant />
+<app-nav-commercant />
+<app-alerte-commande />
+
+<main class="parametres">
+  <div class="conteneur">
+
+    <section class="disponibilite" [class.disponibilite--ferme]="!accepteCommandes()">
+      <div class="disponibilite__texte">
+        <h2 class="disponibilite__titre">
+          {{ accepteCommandes() ? 'Vous acceptez les commandes' : 'Commandes suspendues' }}
+        </h2>
+        <p class="disponibilite__note">
+          @if (accepteCommandes()) {
+            Vos clients peuvent commander en ligne dès maintenant.
+          } @else {
+            Votre page reste visible, mais personne ne peut commander.
+          }
+        </p>
+      </div>
+
+      <button type="button" class="bascule" (click)="basculerDisponibilite()">
+        {{ accepteCommandes() ? 'Suspendre' : 'Reprendre' }}
+      </button>
+    </section>
+
+    @if (!accepteCommandes()) {
+      <label class="champ champ--pleine">
+        <span class="champ__libelle">Message affiché à vos clients</span>
+        <textarea
+          class="champ__zone"
+          rows="2"
+          [value]="commerce().messageIndisponible"
+          (change)="majMessageIndisponible($any($event.target).value)"
+        ></textarea>
+      </label>
+    }
+
+    <section class="notifications">
+      <div class="notifications__texte">
+        <h2 class="notifications__titre">Consommation sur place</h2>
+        <p class="notifications__note">
+          @if (commerce().serviceSurPlace) {
+            Vos clients choisissent entre sur place et à emporter au moment de
+            commander.
+          } @else {
+            Toutes les commandes sont à emporter. Activez si vous avez des
+            places assises.
+          }
+        </p>
+      </div>
+
+      <button type="button" class="bascule" (click)="basculerSurPlace()">
+        {{ commerce().serviceSurPlace ? 'Désactiver' : 'Activer' }}
+      </button>
+    </section>
+
+    <section class="notifications">
+      <div class="notifications__texte">
+        <h2 class="notifications__titre">Alerte à chaque commande</h2>
+        <p class="notifications__note">
+          @switch (notifications.permission()) {
+            @case ('indisponible') {
+              Votre navigateur ne gère pas les notifications.
+            }
+            @case ('refusee') {
+              Les notifications sont bloquées dans les réglages de votre
+              navigateur. Autorisez-les pour ce site pour les recevoir.
+            }
+            @default {
+              Une alerte s’affiche dès qu’une commande arrive, tant que cette
+              page reste ouverte sur cet appareil.
+            }
+          }
+        </p>
+      </div>
+
+      @if (notifications.permission() === 'accordee' && notifications.activees()) {
+        <button type="button" class="bascule" (click)="notifications.desactiver()">
+          Désactiver
+        </button>
+      } @else if (notifications.permission() !== 'indisponible' && notifications.permission() !== 'refusee') {
+        <button type="button" class="bascule" (click)="notifications.activer()">
+          Activer
+        </button>
+      }
+    </section>
+
+    <div class="onglets" role="tablist" aria-label="Réglages">
+      @for (item of onglets; track item.id) {
+        <button
+          type="button"
+          class="onglet"
+          role="tab"
+          [class.onglet--actif]="onglet() === item.id"
+          [attr.aria-selected]="onglet() === item.id"
+          (click)="choisirOnglet(item.id)"
+        >
+          {{ item.libelle }}
+        </button>
+      }
+    </div>
+
+    @if (confirmation(); as message) {
+      <p class="confirmation" role="status">{{ message }}</p>
+    }
+
+    @switch (onglet()) {
+      @case ('commerce') {
+        <form class="bloc" #infos (submit)="$event.preventDefault(); enregistrerInfos(infos)">
+          <label class="champ">
+            <span class="champ__libelle">Nom du commerce</span>
+            <input class="champ__saisie" name="nom" [value]="commerce().nom" />
+          </label>
+
+          <label class="champ">
+            <span class="champ__libelle">Accroche</span>
+            <input class="champ__saisie" name="accroche" [value]="commerce().accroche" />
+          </label>
+
+          <label class="champ">
+            <span class="champ__libelle">Adresse</span>
+            <input class="champ__saisie" name="adresse" [value]="commerce().adresse" />
+          </label>
+
+          <p class="bloc__aide">
+            La phrase affichée à vos clients (« Retrait demain dès 6h30… ») est
+            calculée à partir de vos horaires : elle reste juste toute seule.
+          </p>
+
+          <button type="submit" class="valider">Enregistrer</button>
+        </form>
+
+        @if (!accesActif()) {
+          <section class="coupee">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 8v4.5M12 16h.01" />
+            </svg>
+            <div>
+              <h3 class="coupee__titre">Votre page est suspendue</h3>
+              <p class="coupee__texte">
+                Votre lien et votre QR code ne mènent plus à votre carte, en
+                attente du règlement de votre abonnement. Vos clients voient un
+                message neutre : rien n’indique le motif. Contactez-nous pour
+                réactiver votre page.
+              </p>
+            </div>
+          </section>
+        } @else {
+        <section class="lien-public">
+          <h3 class="lien-public__titre">Votre page et votre QR code</h3>
+          <p class="lien-public__aide">
+            C’est l’adresse que vos clients ouvrent en scannant le QR code posé
+            sur votre comptoir.
+          </p>
+
+          <div class="lien-public__corps">
+            <div class="lien-public__qr">
+              <app-qr-code [valeur]="lienPublic()" />
+            </div>
+
+            <div class="lien-public__actions">
+              <p class="lien-public__url">{{ lienPublic() }}</p>
+
+              <div class="lien-public__boutons">
+                <button type="button" class="bouton" (click)="copierLien()">
+                  {{ lienCopie() ? 'Lien copié' : 'Copier le lien' }}
+                </button>
+
+                <a class="bouton bouton--principal" [routerLink]="['/commercant', commerce().id, 'affiche']">
+                  Voir l’affiche à imprimer
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+        }
+      }
+
+      @case ('produits') {
+        <div class="bloc">
+          <p class="bloc__aide">
+            Modifiez le nom ou le prix d’un produit, puis validez la ligne.
+          </p>
+
+          @for (produit of commerce().produits; track produit.id) {
+            <div class="produit">
+              <input
+                class="champ__saisie produit__nom"
+                [value]="produit.nom"
+                [attr.aria-label]="'Nom de ' + produit.nom"
+                #nomProduit
+              />
+              <div class="produit__prix">
+                <input
+                  class="champ__saisie"
+                  type="number"
+                  min="0"
+                  step="0.05"
+                  [value]="produit.prixCentimes / 100"
+                  [attr.aria-label]="'Prix de ' + produit.nom"
+                  #prixProduit
+                />
+                <span class="produit__euro">€</span>
+              </div>
+              <button
+                type="button"
+                class="produit__valider"
+                (click)="enregistrerProduit(produit.id, nomProduit.value, prixProduit.value)"
+              >
+                Valider
+              </button>
+            </div>
+          }
+        </div>
+      }
+
+      @case ('horaires') {
+        <div class="bloc">
+          <p class="bloc__aide">
+            Vos horaires d’ouverture, jour par jour. Ils s’affichent sur votre page.
+          </p>
+
+          @for (horaire of commerce().horaires; track horaire.jour) {
+            <div class="horaire" [class.horaire--ferme]="!horaire.ouvert">
+              <button
+                type="button"
+                class="horaire__jour"
+                [attr.aria-pressed]="horaire.ouvert"
+                (click)="basculerJour(horaire)"
+              >
+                <span class="horaire__temoin" aria-hidden="true"></span>
+                {{ horaire.jour }}
+              </button>
+
+              @if (horaire.ouvert) {
+                <div class="horaire__plage">
+                  <input
+                    class="champ__saisie"
+                    type="time"
+                    [value]="horaire.ouverture"
+                    [attr.aria-label]="'Ouverture ' + horaire.jour"
+                    (change)="majHeure(horaire, 'ouverture', $any($event.target).value)"
+                  />
+                  <span aria-hidden="true">–</span>
+                  <input
+                    class="champ__saisie"
+                    type="time"
+                    [value]="horaire.fermeture"
+                    [attr.aria-label]="'Fermeture ' + horaire.jour"
+                    (change)="majHeure(horaire, 'fermeture', $any($event.target).value)"
+                  />
+                </div>
+              } @else {
+                <span class="horaire__ferme">Fermé</span>
+              }
+            </div>
+          }
+        </div>
+      }
+
+    }
+
+    <p class="note-apparence">
+      Les couleurs de votre page sont réglées avec vous à la mise en place.
+      Pour les modifier, contactez-nous.
+    </p>
+
+    <button type="button" class="reinitialiser" (click)="reinitialiser()">
+      Revenir aux réglages d’origine
+    </button>
+
+  </div>
+</main>

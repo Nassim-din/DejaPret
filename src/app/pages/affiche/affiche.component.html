@@ -1,0 +1,81 @@
+<div class="barre-outils">
+  <div class="conteneur barre-outils__contenu">
+    <a class="retour" [routerLink]="['/commercant', commerce().id, 'parametres']">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M15 6l-6 6 6 6" />
+      </svg>
+      Retour aux paramètres
+    </a>
+
+    @if (accesActif()) {
+    <button type="button" class="imprimer" (click)="imprimer()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 9V3h12v6" />
+        <path d="M6 18H4a1 1 0 0 1-1-1v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a1 1 0 0 1-1 1h-2" />
+        <rect x="6" y="14" width="12" height="7" rx="1" />
+      </svg>
+      Imprimer l’affiche
+    </button>
+    }
+  </div>
+</div>
+
+@if (!accesActif()) {
+  <div class="page">
+    <div class="alerte">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 8v4.5M12 16h.01" />
+      </svg>
+      <div>
+        <h2 class="alerte__titre">Affiche indisponible</h2>
+        <p class="alerte__texte">
+          Votre page est suspendue en attente du règlement de votre abonnement :
+          le QR code ne mènerait nulle part. Contactez-nous pour la réactiver.
+        </p>
+      </div>
+    </div>
+  </div>
+} @else {
+
+<main class="page">
+  <article class="affiche">
+    <header class="affiche__entete">
+      <p class="affiche__accroche">{{ commerce().accroche }}</p>
+      <h1 class="affiche__nom">{{ commerce().nom }}</h1>
+    </header>
+
+    <p class="affiche__promesse">Commandez à l’avance,<br />ne faites plus la queue.</p>
+
+    <div class="affiche__qr">
+      <app-qr-code [valeur]="lienPublic()" />
+    </div>
+
+    <p class="affiche__lien">{{ lienAffiche() }}</p>
+
+    <ol class="etapes">
+      <li class="etape">
+        <span class="etape__numero">1</span>
+        <span class="etape__texte">Scannez ce code avec l’appareil photo de votre téléphone.</span>
+      </li>
+      <li class="etape">
+        <span class="etape__numero">2</span>
+        <span class="etape__texte">Choisissez vos produits et votre heure de retrait.</span>
+      </li>
+      <li class="etape">
+        <span class="etape__numero">3</span>
+        <span class="etape__texte">Payez en ligne, vous recevez un code à 4 chiffres par SMS.</span>
+      </li>
+      <li class="etape">
+        <span class="etape__numero">4</span>
+        <span class="etape__texte">Présentez votre code au comptoir et repartez.</span>
+      </li>
+    </ol>
+
+    <footer class="affiche__pied">
+      <span>{{ commerce().adresse }}</span>
+      <span class="affiche__marque">Déjà Prêt</span>
+    </footer>
+  </article>
+</main>
+}

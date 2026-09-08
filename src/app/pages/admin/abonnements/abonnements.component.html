@@ -1,0 +1,112 @@
+<app-entete-admin titre="Abonnements" />
+<app-nav-admin />
+
+<main class="ecran">
+  <div class="conteneur">
+
+    <div class="cartes">
+      <app-stat-carte
+        forte
+        class="cartes__large"
+        libelle="Revenu mensuel récurrent"
+        [valeur]="plateforme.revenuMensuelCentimes() | prix"
+        [note]="
+          plateforme.commercesFactures().length +
+          ' abonnement(s) facturé(s) à ' +
+          (abonnementMensuelCentimes | prix) +
+          ' par mois'
+        "
+      />
+      <app-stat-carte
+        libelle="Mises en place réglées"
+        [valeur]="plateforme.misesEnPlaceRegleesCentimes() | prix"
+      />
+      <app-stat-carte
+        libelle="Restant à encaisser"
+        [valeur]="plateforme.misesEnPlaceDues().length * miseEnPlaceCentimes | prix"
+        [note]="plateforme.misesEnPlaceDues().length + ' mise(s) en place à facturer'"
+      />
+    </div>
+
+    <section class="bloc">
+      <h2 class="bloc__titre">
+        Par commerce
+        <span class="bloc__filet" aria-hidden="true"></span>
+      </h2>
+
+      @for (item of plateforme.commerces(); track item.commerce.id) {
+        <article class="abonnement">
+          <header class="abonnement__entete">
+            <div>
+              <h3 class="abonnement__nom">{{ item.commerce.nom }}</h3>
+              <p class="abonnement__depuis">
+                Client depuis le {{ depuis(item.commerce.abonnement.depuis) }}
+              </p>
+            </div>
+            <span class="abonnement__montant">
+              {{
+                item.commerce.abonnement.statut === 'actif'
+                  ? (abonnementMensuelCentimes | prix) + ' / mois'
+                  : 'Non facturé'
+              }}
+            </span>
+          </header>
+
+          <div class="ligne-reglage">
+            <span class="ligne-reglage__libelle">Statut de l’abonnement</span>
+            <div class="statuts" role="group" aria-label="Statut de l’abonnement">
+              @for (statut of statuts; track statut) {
+                <button
+                  type="button"
+                  class="statut"
+                  [class.statut--retenu]="item.commerce.abonnement.statut === statut"
+                  [attr.aria-pressed]="item.commerce.abonnement.statut === statut"
+                  (click)="changerStatut(item.commerce, statut)"
+                >
+                  {{ libelleStatut(statut) }}
+                </button>
+              }
+            </div>
+          </div>
+
+          @if (item.commerce.abonnement.statut === 'suspendu') {
+            <p class="coupure">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 8v4.5M12 16h.01" />
+              </svg>
+              <span>
+                <strong>Page publique coupée.</strong>
+                Le lien et le QR code de ce commerce ne mènent plus à sa carte.
+                Ses clients voient un message neutre, sans mention du motif.
+              </span>
+            </p>
+          }
+
+          <div class="ligne-reglage">
+            <span class="ligne-reglage__libelle">
+              Mise en place ({{ miseEnPlaceCentimes | prix }})
+            </span>
+            <button
+              type="button"
+              class="bascule"
+              [class.bascule--reglee]="item.commerce.abonnement.miseEnPlaceReglee"
+              [attr.aria-pressed]="item.commerce.abonnement.miseEnPlaceReglee"
+              (click)="basculerMiseEnPlace(item.commerce)"
+            >
+              {{ item.commerce.abonnement.miseEnPlaceReglee ? 'Réglée' : 'À encaisser' }}
+            </button>
+          </div>
+        </article>
+      }
+    </section>
+
+    <p class="encart">
+      <strong>Commission prélevée : 0 %.</strong>
+      Les paiements des clients finaux vont directement au commerçant via Stripe
+      Connect. La plateforme ne détient à aucun moment leurs fonds : seuls
+      l’abonnement et la mise en place sont facturés au commerçant.
+    </p>
+
+  </div>
+</main>

@@ -1,0 +1,123 @@
+<app-entete-etape titre="Créneau de retrait" [retour]="['/client', commerce().id]" />
+
+<div class="bandeau">
+  <div class="conteneur bandeau__contenu">
+    <span>{{ libelleArticles() }} · {{ commerce().nom }}</span>
+    <strong>{{ totalCentimes() | prix }}</strong>
+  </div>
+</div>
+
+<main class="etape">
+  <div class="conteneur">
+    <h2 class="sr-only">Choisir un jour et une heure</h2>
+
+    @if (commerce().serviceSurPlace) {
+      <h3 class="section">
+        Comment souhaitez-vous être servi ?
+        <span class="section__filet" aria-hidden="true"></span>
+      </h3>
+
+      <div class="services" role="group" aria-label="Mode de service">
+        @for (mode of modes; track mode.valeur) {
+          <button
+            type="button"
+            class="service"
+            [class.service--actif]="commande.service() === mode.valeur"
+            [attr.aria-pressed]="commande.service() === mode.valeur"
+            (click)="choisirService(mode.valeur)"
+          >
+            <span class="service__nom">{{ mode.libelle }}</span>
+            <span class="service__note">{{ mode.note }}</span>
+          </button>
+        }
+      </div>
+    }
+
+    <h3 class="section">
+      Jour de retrait
+      <span class="section__filet" aria-hidden="true"></span>
+      <span class="section__choisi">{{ libelleDateChoisie() }}</span>
+    </h3>
+
+    <div class="calendrier" role="group" aria-label="Choisir un jour de retrait">
+      @for (jour of jours(); track jour.iso) {
+        <button
+          type="button"
+          class="jour"
+          [class.jour--actif]="commande.date() === jour.iso"
+          [class.jour--ferme]="!jour.ouvert"
+          [disabled]="!jour.ouvert"
+          [attr.aria-pressed]="commande.date() === jour.iso"
+          [attr.aria-label]="jour.abrege + ' ' + jour.numero + ' ' + jour.mois"
+          (click)="choisirDate(jour.iso)"
+        >
+          <span class="jour__abrege">{{ jour.abrege }}</span>
+          <span class="jour__numero">{{ jour.numero }}</span>
+          @if (jour.ouvert) {
+            @if (jour.aujourdhui) {
+              <span class="jour__point" aria-hidden="true"></span>
+            }
+          } @else {
+            <span class="jour__ferme">fermé</span>
+          }
+        </button>
+      }
+    </div>
+
+    @for (groupe of commerce().creneaux; track groupe.libelle) {
+      <section class="groupe">
+        <h3 class="groupe__titre">
+          {{ groupe.libelle }}
+          <span class="groupe__filet" aria-hidden="true"></span>
+        </h3>
+
+        <div class="heures">
+          @for (heure of groupe.heures; track heure) {
+            <button
+              type="button"
+              class="heure"
+              [class.heure--choisie]="commande.heure() === heure"
+              [attr.aria-pressed]="commande.heure() === heure"
+              (click)="choisirHeure(heure)"
+            >
+              @if (commande.heure() === heure) {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4.5 12.5l4.5 4.5L19.5 6.5" />
+                </svg>
+              }
+              {{ heure }}
+            </button>
+          }
+        </div>
+      </section>
+    }
+
+    <p class="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7.5V12l3 2" />
+      </svg>
+      Votre commande sera prête pour l’heure choisie.
+    </p>
+  </div>
+</main>
+
+<footer class="barre">
+  <div class="conteneur barre__contenu">
+    <div class="barre__total">
+      <span class="barre__libelle">Retrait {{ libelleDateChoisie() }}</span>
+      <span class="barre__montant">{{ commande.heure() ?? '—' }}</span>
+    </div>
+
+    @if (commande.heure()) {
+      <a class="barre__action" [routerLink]="['/client', commerce().id, 'coordonnees']">
+        Continuer
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 6l6 6-6 6" />
+        </svg>
+      </a>
+    } @else {
+      <button type="button" class="barre__action" disabled>Continuer</button>
+    }
+  </div>
+</footer>

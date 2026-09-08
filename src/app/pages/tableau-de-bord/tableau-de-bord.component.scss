@@ -1,0 +1,412 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: var(--c-fond);
+  color: var(--c-marque);
+}
+
+.bord {
+  flex-grow: 1;
+  padding: 22px 0 32px;
+}
+
+.section {
+  margin-bottom: 28px;
+
+  &__titre {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 14px;
+    font-family: var(--police-titre);
+    font-size: 19px;
+    font-weight: 600;
+  }
+
+  &__filet {
+    flex-grow: 1;
+    height: 1px;
+    background: color-mix(in oklab, var(--c-marque) 16%, var(--c-fond));
+  }
+
+  &__vide {
+    margin: 0;
+    padding: 18px;
+    border: 1px dashed color-mix(in oklab, var(--c-marque) 22%, var(--c-fond));
+    border-radius: 14px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: color-mix(in oklab, var(--c-marque) 60%, var(--c-fond));
+  }
+}
+
+/* Le chiffre du jour et l'avancement, côte à côte sur grand écran. */
+.resume {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 760px) {
+  .resume {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+}
+
+.resume__principal {
+  padding: 20px;
+  border-radius: 18px;
+  background: var(--c-marque);
+  color: var(--c-fond);
+}
+
+.resume__libelle {
+  margin: 0;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+}
+
+.resume__valeur {
+  margin: 6px 0 0;
+  font-family: var(--police-titre);
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.resume__note {
+  margin: 8px 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: color-mix(in oklab, var(--c-fond) 66%, var(--c-marque));
+}
+
+.jauge {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid color-mix(in oklab, var(--c-marque) 12%, var(--c-fond));
+  border-radius: 18px;
+  background: color-mix(in oklab, var(--c-fond) 88%, #fff);
+
+  &__titre {
+    margin: 0;
+    font-family: var(--police-titre);
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  &__barre {
+    display: flex;
+    height: 14px;
+    border-radius: 7px;
+    background: color-mix(in oklab, var(--c-marque) 8%, var(--c-fond));
+    overflow: hidden;
+  }
+
+  &__part {
+    height: 100%;
+
+    &--a-preparer {
+      background: var(--c-accent);
+    }
+
+    &--prete {
+      background: var(--c-marque);
+    }
+
+    &--retiree {
+      background: color-mix(in oklab, var(--c-marque) 26%, var(--c-fond));
+    }
+  }
+
+  &__legende {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 12.5px;
+    color: color-mix(in oklab, var(--c-marque) 62%, var(--c-fond));
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    strong {
+      color: var(--c-marque);
+    }
+  }
+}
+
+.pastille {
+  width: 9px;
+  height: 9px;
+  border-radius: 5px;
+
+  &--a-preparer {
+    background: var(--c-accent);
+  }
+
+  &--prete {
+    background: var(--c-marque);
+  }
+
+  &--retiree {
+    background: color-mix(in oklab, var(--c-marque) 26%, var(--c-fond));
+  }
+}
+
+.classement {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.produit {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid color-mix(in oklab, var(--c-marque) 12%, var(--c-fond));
+  border-radius: 14px;
+  background: color-mix(in oklab, var(--c-fond) 88%, #fff);
+
+  &__quantite {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    background: color-mix(in oklab, var(--c-accent) 24%, var(--c-fond));
+    font-family: var(--police-titre);
+    font-size: 15px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__corps {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  &__nom {
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+
+  &__piste {
+    height: 6px;
+    border-radius: 3px;
+    background: color-mix(in oklab, var(--c-marque) 8%, var(--c-fond));
+    overflow: hidden;
+  }
+
+  &__barre {
+    display: block;
+    height: 100%;
+    border-radius: 3px;
+    background: var(--c-accent);
+  }
+
+  &__total {
+    flex-shrink: 0;
+    font-size: 14px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.histogramme {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tranche {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &__heure {
+    flex-shrink: 0;
+    width: 42px;
+    font-size: 13px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__piste {
+    flex-grow: 1;
+    height: 26px;
+    border-radius: 13px;
+    background: color-mix(in oklab, var(--c-marque) 8%, var(--c-fond));
+    overflow: hidden;
+  }
+
+  &__barre {
+    display: block;
+    height: 100%;
+    border-radius: 13px;
+    background: var(--c-accent);
+  }
+
+  &__nombre {
+    flex-shrink: 0;
+    width: 20px;
+    text-align: right;
+    font-size: 13px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.avenir {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid color-mix(in oklab, var(--c-marque) 12%, var(--c-fond));
+  border-radius: 18px;
+  background: color-mix(in oklab, var(--c-fond) 88%, #fff);
+
+  &__chiffres {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+.mini {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  &__valeur {
+    font-family: var(--police-titre);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__libelle {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, var(--c-marque) 55%, var(--c-fond));
+  }
+}
+
+.jours {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 12px 0 0;
+  border-top: 1px solid color-mix(in oklab, var(--c-marque) 10%, var(--c-fond));
+  list-style: none;
+
+  &__ligne {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-size: 13.5px;
+  }
+
+  &__libelle {
+    flex-grow: 1;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  &__nombre {
+    color: color-mix(in oklab, var(--c-marque) 58%, var(--c-fond));
+  }
+
+  &__montant {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.apreparer {
+  padding-top: 12px;
+  border-top: 1px solid color-mix(in oklab, var(--c-marque) 10%, var(--c-fond));
+
+  &__titre {
+    margin: 0 0 8px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, var(--c-marque) 55%, var(--c-fond));
+  }
+
+  &__liste {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      padding: 6px 12px;
+      border-radius: 12px;
+      background: color-mix(in oklab, var(--c-accent) 18%, var(--c-fond));
+      font-size: 13px;
+    }
+  }
+}
+
+.reguliers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.regulier {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 14px;
+  border: 1px solid color-mix(in oklab, var(--c-marque) 12%, var(--c-fond));
+  border-radius: 14px;
+  background: color-mix(in oklab, var(--c-fond) 88%, #fff);
+
+  &__prenom {
+    font-size: 14.5px;
+    font-weight: 700;
+  }
+
+  &__nombre {
+    font-size: 12px;
+    color: color-mix(in oklab, var(--c-marque) 58%, var(--c-fond));
+  }
+}

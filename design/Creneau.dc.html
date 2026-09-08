@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Karla:wght@400;500;600;700&display=swap">
+  <style>
+    body { margin: 0; font-family: Karla, "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #B4552F; text-decoration: none; }
+    a:hover { color: #8E4223; }
+  </style>
+</helmet>
+
+<div style="width: 390px; height: 844px; background: #FAF5EC; color: #241C15; display: flex; flex-direction: column; overflow: hidden;">
+
+  <div style="height: 5px; background: {{accent}};"></div>
+
+  <div style="display: flex; align-items: center; gap: 10px; padding: 14px 20px; background: #FFFFFF; border-bottom: 1px solid #E4D9C7;">
+    <div style="width: 40px; height: 40px; margin-left: -10px; display: flex; align-items: center; justify-content: center;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#241C15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+    </div>
+    <div style="font-family: Newsreader, Georgia, serif; font-size: 21px; font-weight: 500;">Cr&eacute;neau de retrait</div>
+  </div>
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: #F3E7D6;">
+    <div style="font-size: 12.5px; color: #6B4E28; font-weight: 500;">7 articles &middot; Boulangerie du Panier</div>
+    <div style="font-size: 13px; font-weight: 700; color: #6B4E28;">8,20&nbsp;&euro;</div>
+  </div>
+
+  <div style="flex-grow: 1; display: flex; flex-direction: column; padding: 18px 20px 0;">
+
+    <div style="display: flex; gap: 10px;">
+      <div style="flex-grow: 1; height: 56px; border-radius: 14px; background: #241C15; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">
+        <div style="font-size: 14.5px; font-weight: 700;">Aujourd&rsquo;hui</div>
+        <div style="font-size: 11px; opacity: 0.7;">jeudi 10</div>
+      </div>
+      <div style="flex-grow: 1; height: 56px; border-radius: 14px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">
+        <div style="font-size: 14.5px; font-weight: 700; color: #241C15;">Demain</div>
+        <div style="font-size: 11px; color: #8A7A66;">vendredi 11</div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 8px; padding: 22px 0 12px;">
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 19px; font-weight: 500;">Matin</div>
+      <div style="flex-grow: 1; height: 1px; background: #E4D9C7;"></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;">
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">7h00</div>
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">7h15</div>
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">7h30</div>
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">7h45</div>
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">8h00</div>
+      <div style="height: 52px; border-radius: 13px; background: {{accent}}; border: 1px solid {{accent}}; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 15px; font-weight: 700; color: #FFFFFF;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"/></svg>
+        8h15
+      </div>
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">8h30</div>
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">8h45</div>
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">9h00</div>
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">9h15</div>
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">9h30</div>
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">9h45</div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 8px; padding: 22px 0 12px;">
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 19px; font-weight: 500;">Apr&egrave;s-midi</div>
+      <div style="flex-grow: 1; height: 1px; background: #E4D9C7;"></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;">
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">16h00</div>
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">16h15</div>
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">16h30</div>
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">16h45</div>
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">17h00</div>
+      <div style="height: 52px; border-radius: 13px; background: #FFFFFF; border: 1px solid #DCCFB9; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">17h15</div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 9px; padding: 20px 0 0;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A7A66" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
+        <circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/>
+      </svg>
+      <div style="font-size: 12.5px; color: #6B5D4E;">Votre commande sera pr&ecirc;te pour l&rsquo;heure choisie.</div>
+    </div>
+
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 14px; padding: 14px 20px 22px; background: #FFFFFF; border-top: 1px solid #E4D9C7;">
+    <div style="display: flex; flex-direction: column; gap: 1px;">
+      <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #8A7A66; font-weight: 600;">Retrait</div>
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 25px; font-weight: 600; line-height: 1.1;">8h15</div>
+    </div>
+    <div style="flex-grow: 1; height: 52px; border-radius: 26px; background: {{accent}}; color: #FFFFFF; font-size: 15.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;">
+      Continuer
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#B4552F","options":["#B4552F","#1F5C4A","#2B4A7D","#8A2E3B"]}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#B4552F' };
+  }
+}
+</script>
+</body>
+</html>

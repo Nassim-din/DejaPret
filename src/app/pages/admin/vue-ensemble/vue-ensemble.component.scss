@@ -1,0 +1,116 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: var(--c-fond);
+  color: var(--c-marque);
+}
+
+.ecran {
+  flex-grow: 1;
+  padding: 22px 0 32px;
+}
+
+.bloc {
+  margin-bottom: 28px;
+
+  &__titre {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 14px;
+    font-family: var(--police-titre);
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  &__filet {
+    flex-grow: 1;
+    height: 1px;
+    background: color-mix(in oklab, var(--c-marque) 16%, var(--c-fond));
+  }
+
+  &__lien {
+    font-family: var(--police-texte);
+    font-size: 12.5px;
+    font-weight: 700;
+    color: color-mix(in oklab, var(--c-accent) 72%, var(--c-marque));
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.cartes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+
+  &__large {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 700px) {
+  .cartes {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .cartes__large {
+    grid-column: span 2;
+  }
+}
+
+.resume {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &__ligne {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 16px;
+    border: 1px solid color-mix(in oklab, var(--c-marque) 12%, var(--c-fond));
+    border-radius: 14px;
+    background: #fff;
+  }
+
+  &__pastille {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+  }
+
+  &__nom {
+    flex-grow: 1;
+    min-width: 0;
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+
+  &__chiffre {
+    flex-shrink: 0;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    color: color-mix(in oklab, var(--c-marque) 58%, var(--c-fond));
+
+    &--fort {
+      font-weight: 700;
+      color: var(--c-marque);
+    }
+  }
+}
+
+.manquant {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px dashed color-mix(in oklab, var(--c-marque) 28%, var(--c-fond));
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: color-mix(in oklab, var(--c-marque) 62%, var(--c-fond));
+}

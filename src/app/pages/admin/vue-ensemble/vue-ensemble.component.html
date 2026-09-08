@@ -1,0 +1,95 @@
+<app-entete-admin titre="Vue d’ensemble" />
+<app-nav-admin />
+
+<main class="ecran">
+  <div class="conteneur">
+
+    <section class="bloc">
+      <h2 class="bloc__titre">
+        Revenus
+        <span class="bloc__filet" aria-hidden="true"></span>
+      </h2>
+
+      <div class="cartes">
+        <app-stat-carte
+          forte
+          class="cartes__large"
+          libelle="Revenu mensuel récurrent"
+          [valeur]="plateforme.revenuMensuelCentimes() | prix"
+          [note]="
+            plateforme.commercesFactures().length +
+            ' abonnement(s) actif(s) sur ' +
+            plateforme.nombreCommerces() +
+            ' commerce(s) · aucune commission prélevée'
+          "
+        />
+        <app-stat-carte
+          libelle="Mises en place réglées"
+          [valeur]="plateforme.misesEnPlaceRegleesCentimes() | prix"
+        />
+        <app-stat-carte
+          libelle="Mises en place dues"
+          [valeur]="plateforme.misesEnPlaceDues().length"
+        />
+      </div>
+    </section>
+
+    <section class="bloc">
+      <h2 class="bloc__titre">
+        Activité du jour
+        <span class="bloc__filet" aria-hidden="true"></span>
+      </h2>
+
+      <div class="cartes">
+        <app-stat-carte libelle="Commandes" [valeur]="plateforme.commandesDuJour()" />
+        <app-stat-carte
+          libelle="Volume traité"
+          [valeur]="plateforme.volumeTraiteCentimes() | prix"
+        />
+        <app-stat-carte
+          libelle="Panier moyen"
+          [valeur]="plateforme.panierMoyenCentimes() | prix"
+        />
+        <app-stat-carte
+          libelle="Commerces ouverts"
+          [valeur]="plateforme.commercesOuverts() + ' / ' + plateforme.nombreCommerces()"
+        />
+      </div>
+    </section>
+
+    <section class="bloc">
+      <h2 class="bloc__titre">
+        Par commerce
+        <span class="bloc__filet" aria-hidden="true"></span>
+        <a class="bloc__lien" routerLink="/admin/commerces">Gérer</a>
+      </h2>
+
+      <ul class="resume">
+        @for (item of plateforme.commerces(); track item.commerce.id) {
+          <li class="resume__ligne">
+            <span class="resume__pastille" [style.background]="item.commerce.couleurs.marque"></span>
+            <span class="resume__nom">{{ item.commerce.nom }}</span>
+            <span class="resume__chiffre">{{ item.commandes }} cmd</span>
+            <span class="resume__chiffre resume__chiffre--fort">
+              {{ item.volumeCentimes | prix }}
+            </span>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <section class="bloc">
+      <h2 class="bloc__titre">
+        Mesure d’audience
+        <span class="bloc__filet" aria-hidden="true"></span>
+      </h2>
+
+      <p class="manquant">
+        Visiteurs, sessions et taux de conversion ne sont pas affichés : ces
+        chiffres demandent l’API, qui n’est pas encore branchée. Tout ce qui
+        est présenté ci-dessus vient de ce que l’application connaît réellement.
+      </p>
+    </section>
+
+  </div>
+</main>

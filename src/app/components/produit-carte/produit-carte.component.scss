@@ -1,0 +1,130 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.carte {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 100%;
+
+  &--inerte {
+    opacity: 0.55;
+  }
+}
+
+.visuel {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  /* Bande basse réservée au bouton d'ajout : l'illustration n'est
+     jamais recouverte, et sa place ne bouge pas quand on commande. */
+  padding-bottom: 50px;
+  border-radius: 12px;
+  background: var(--c-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* La photo, elle, occupe toute la tuile. */
+.photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.dessin {
+  color: var(--c-accent);
+}
+
+/* Bouton d'ajout, posé sur le visuel : la mise en page ne bouge pas
+   quand le compteur apparaît. */
+.ajout {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 22px;
+  background: var(--c-marque);
+  color: var(--c-fond);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 18%);
+
+  svg {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+.compteur {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  /* Trois cibles de 44 px, ancrées au même endroit que le bouton
+     d'ajout : rien ne se déplace en commandant. */
+  width: 126px;
+  height: 44px;
+  border-radius: 22px;
+  background: var(--c-marque);
+  color: var(--c-fond);
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 18%);
+
+  &__bouton {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+
+    svg {
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+  &__valeur {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.nom {
+  /* Occupe la place restante : les prix s'alignent en bas de rangée,
+     que le nom tienne sur une ou deux lignes. */
+  flex-grow: 1;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--c-marque);
+}
+
+.prix {
+  margin: 0;
+  font-family: var(--police-titre);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--c-marque);
+}

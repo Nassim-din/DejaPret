@@ -1,0 +1,304 @@
+<app-entete-commercant />
+<app-nav-commercant />
+<app-alerte-commande />
+
+<div class="jours">
+  <div class="conteneur jours__contenu" role="group" aria-label="Choisir un jour">
+    @for (jour of jours(); track jour.iso) {
+      <button
+        type="button"
+        class="jour"
+        [class.jour--choisi]="jour.choisi"
+        [class.jour--ferme]="!jour.ouvert"
+        [attr.aria-pressed]="jour.choisi"
+        [attr.aria-label]="jour.abrege + ' ' + jour.numero + ' — ' + jour.nombre + ' commande(s)'"
+        (click)="choisirJour(jour.iso)"
+      >
+        <span class="jour__abrege">{{ jour.abrege }}</span>
+        <span class="jour__numero">{{ jour.numero }}</span>
+        @if (jour.nombre > 0) {
+          <span class="jour__pastille">{{ jour.nombre }}</span>
+        } @else {
+          <span class="jour__pastille jour__pastille--vide">—</span>
+        }
+      </button>
+    }
+  </div>
+</div>
+
+<main class="journee">
+  <div class="conteneur">
+
+    <header class="titre-jour">
+      <div>
+        <h2 class="titre-jour__date">{{ libelleJourChoisi() }}</h2>
+        <p class="titre-jour__resume">
+          @if (commandesDuJour().length === 0) {
+            Aucune commande pour ce jour
+          } @else {
+            {{ commandesDuJour().length }} commande{{ commandesDuJour().length > 1 ? 's' : '' }}
+            @if (jourChoisi() === aujourdhui) {
+              · à préparer aujourd’hui
+            }
+          }
+        </p>
+      </div>
+
+      @if (jourChoisi() !== aujourdhui) {
+        <button type="button" class="titre-jour__retour" (click)="choisirJour(aujourdhui)">
+          Revenir à aujourd’hui
+        </button>
+      }
+    </header>
+
+    @if (commandesDuJour().length > 0) {
+      <div class="chiffres">
+        <div class="chiffre">
+          <span class="chiffre__valeur">{{ commandes().length }}</span>
+          <span class="chiffre__libelle">
+            {{ filtreActif() ? 'Affichées' : 'Commandes' }}
+          </span>
+        </div>
+        <div class="chiffre">
+          <span class="chiffre__valeur">{{ articlesAffiches() }}</span>
+          <span class="chiffre__libelle">Articles</span>
+        </div>
+        <div class="chiffre">
+          <span class="chiffre__valeur">{{ totalCentimes() | prix }}</span>
+          <span class="chiffre__libelle">Encaissé</span>
+        </div>
+      </div>
+
+      <div class="filtres">
+        <div class="recherche">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5" />
+            <path d="M16 16l4.5 4.5" />
+          </svg>
+          <input
+            type="search"
+            class="recherche__saisie"
+            placeholder="Prénom, code ou produit"
+            aria-label="Rechercher une commande"
+            [value]="recherche()"
+            (input)="majRecherche($event)"
+          />
+        </div>
+
+        <div class="puces" role="group" aria-label="Filtrer par statut">
+          @for (statut of statutsAffiches(); track statut) {
+            <button
+              type="button"
+              class="puce"
+              [class.puce--active]="filtreStatut() === statut"
+              [attr.aria-pressed]="filtreStatut() === statut"
+              (click)="basculerFiltre(statut)"
+            >
+              {{ libelleStatut(statut) }}
+              <span class="puce__compte">{{ compte(statut) }}</span>
+            </button>
+          }
+        </div>
+      </div>
+
+      @if (commandes().length > 0) {
+        <ul class="liste">
+          @for (commande of commandes(); track commande.id) {
+            <li>
+              <button
+                type="button"
+                class="ligne"
+                [class.ligne--directe]="commande.enDirect"
+                (click)="ouvrir(commande)"
+              >
+                <span class="ligne__heure">{{ commande.heure }}</span>
+
+                <span class="ligne__milieu">
+                  <span class="ligne__prenom">
+                    {{ commande.prenom }}
+                    @if (commande.service === 'sur-place') {
+                      <span class="ligne__service">Sur place</span>
+                    }
+                    @if (commande.enDirect) {
+                      <span class="ligne__badge">nouvelle</span>
+                    }
+                  </span>
+                  <span class="ligne__apercu">
+                    @for (item of commande.lignes; track $index) {
+                      {{ item.quantite }}&nbsp;{{ item.nom }}{{ $last ? '' : ' · ' }}
+                    }
+                  </span>
+                </span>
+
+                <span class="ligne__droite">
+                  <span class="ligne__montant">{{ commande.totalCentimes | prix }}</span>
+                  <span class="statut" [class]="'statut--' + commande.statut">
+                    {{ libelleStatut(commande.statut) }}
+                  </span>
+                </span>
+              </button>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="vide">
+          Aucune commande ne correspond.
+          <button type="button" class="vide__action" (click)="effacerFiltres()">
+            Tout afficher
+          </button>
+        </p>
+      }
+    } @else {
+      <p class="vide vide--jour">
+        Rien de prévu ce jour-là. Choisissez une autre date dans le calendrier.
+      </p>
+    }
+
+  </div>
+</main>
+
+@if (commandeOuverte(); as ouverte) {
+  <div class="voile" (click)="fermer()">
+    <div
+      class="panneau"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="titre-commande"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="panneau__entete">
+        <div>
+          <p class="panneau__surtitre">
+            {{ libelleService(ouverte.service) }} · {{ libelleJourChoisi() }} à
+            {{ ouverte.heure }}
+          </p>
+          <h2 class="panneau__titre" id="titre-commande">{{ ouverte.prenom }}</h2>
+        </div>
+        <button type="button" class="panneau__fermer" aria-label="Fermer" (click)="fermer()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </div>
+
+      <p class="panneau__code">
+        <span class="panneau__code-libelle">Code de retrait</span>
+        <span class="panneau__code-valeur">{{ ouverte.code }}</span>
+      </p>
+
+      <h3 class="panneau__section">À préparer</h3>
+      <ul class="articles">
+        @for (item of ouverte.lignes; track $index) {
+          <li class="article">
+            <span class="article__quantite">{{ item.quantite }}</span>
+            <span class="article__texte">
+              <span class="article__nom">{{ item.nom }}</span>
+              @if (item.details?.length) {
+                <span class="article__details">{{ item.details?.join(' · ') }}</span>
+              }
+            </span>
+            <span class="article__prix">
+              {{ item.prixUnitaireCentimes * item.quantite | prix }}
+            </span>
+          </li>
+        }
+      </ul>
+
+      <p class="panneau__total">
+        <span>{{ ouverte.articles }} article{{ ouverte.articles > 1 ? 's' : '' }} · payé</span>
+        <strong>{{ ouverte.totalCentimes | prix }}</strong>
+      </p>
+
+      @if (ouverte.statut === 'refusee') {
+        <div class="refusee">
+          <p class="refusee__titre">Commande refusée</p>
+          @if (ouverte.note) {
+            <p class="refusee__note">« {{ ouverte.note }} »</p>
+          }
+        </div>
+
+        <div class="panneau__actions">
+          <button type="button" class="panneau__valider" (click)="fermer()">Fermer</button>
+        </div>
+      } @else if (!enRefus()) {
+        <h3 class="panneau__section">Où en est cette commande ?</h3>
+        <div class="panneau__statuts">
+          @for (statut of statuts; track statut) {
+            <button
+              type="button"
+              class="choix"
+              [class.choix--retenu]="statutEnAttente() === statut"
+              [attr.aria-pressed]="statutEnAttente() === statut"
+              (click)="choisirStatut(statut)"
+            >
+              {{ libelleStatut(statut) }}
+            </button>
+          }
+        </div>
+
+        <div class="panneau__actions">
+          <button type="button" class="panneau__annuler" (click)="fermer()">Fermer</button>
+          <button
+            type="button"
+            class="panneau__valider"
+            [disabled]="!changementEnAttente()"
+            (click)="confirmer()"
+          >
+            Confirmer le changement
+          </button>
+        </div>
+
+        <button type="button" class="refuser" (click)="ouvrirRefus()">
+          Je ne peux pas préparer cette commande
+        </button>
+      } @else {
+        <h3 class="panneau__section">Pourquoi refusez-vous ?</h3>
+        <p class="panneau__aide">
+          Votre message est envoyé à {{ ouverte.prenom }}. Soyez précis : c’est
+          ce qu’il ou elle lira.
+        </p>
+
+        <div class="suggestions">
+          @for (texte of suggestions(); track texte) {
+            <button
+              type="button"
+              class="suggestion"
+              [class.suggestion--retenue]="note() === texte"
+              (click)="choisirSuggestion(texte)"
+            >
+              {{ texte }}
+            </button>
+          }
+        </div>
+
+        <textarea
+          class="note"
+          rows="3"
+          placeholder="Ou écrivez votre message…"
+          aria-label="Motif du refus"
+          [value]="note()"
+          (input)="majNote($event)"
+        ></textarea>
+
+        <p class="rembours">
+          Le client sera remboursé. Le remboursement passera par Stripe, qui
+          n’est pas encore branché.
+        </p>
+
+        <div class="panneau__actions">
+          <button type="button" class="panneau__annuler" (click)="annulerRefus()">
+            Retour
+          </button>
+          <button
+            type="button"
+            class="panneau__refuser"
+            [disabled]="!refusPossible()"
+            (click)="confirmerRefus()"
+          >
+            Refuser la commande
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+}

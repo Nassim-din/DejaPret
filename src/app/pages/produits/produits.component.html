@@ -1,0 +1,227 @@
+<header class="entete">
+  <div class="conteneur entete__contenu">
+    <a class="entete__retour" routerLink="/" aria-label="Revenir à l’accueil">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M15 6l-6 6 6 6" />
+      </svg>
+    </a>
+
+    <app-commerce-avatar [nom]="commerce().nom" [photo]="commerce().photoProfil" />
+
+    @if (mesCommandes() > 0) {
+      <a
+        class="entete__suivi"
+        [routerLink]="['/client', commerce().id, 'mes-commandes']"
+        aria-label="Voir mes commandes"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 4h12l1 16H5L6 4Z" />
+          <path d="M9 8h6M9 12h6" />
+        </svg>
+        <span class="entete__suivi-compte">{{ mesCommandes() }}</span>
+      </a>
+    }
+
+    <div class="entete__texte">
+      <p class="entete__accroche">
+        <span class="entete__filet" aria-hidden="true"></span>
+        {{ commerce().accroche }}
+      </p>
+      <h1 class="entete__nom">{{ commerce().nom }}</h1>
+      <p class="entete__adresse">
+        {{ commerce().adresse }}
+        @if (horaireDuJour(); as horaire) {
+          @if (horaire.ouvert) {
+            · Aujourd’hui {{ horaire.ouverture }} – {{ horaire.fermeture }}
+          } @else {
+            · Fermé aujourd’hui
+          }
+        }
+      </p>
+    </div>
+  </div>
+</header>
+
+@if (!accesActif()) {
+  <main class="coupee">
+    <div class="conteneur coupee__contenu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 8v4.5M12 16h.01" />
+      </svg>
+      <h2 class="coupee__titre">Page momentanément indisponible</h2>
+      <p class="coupee__texte">
+        La commande en ligne n’est pas accessible pour le moment. Vous pouvez
+        vous présenter directement à la boutique.
+      </p>
+      <p class="coupee__adresse">{{ commerce().adresse }}</p>
+    </div>
+  </main>
+} @else if (accepteCommandes()) {
+  <div class="bandeau">
+    <div class="conteneur">
+      <p class="bandeau__contenu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 7.5V12l3 2" />
+        </svg>
+        {{ phraseRetrait() }}
+      </p>
+    </div>
+  </div>
+} @else {
+  <div class="suspendu">
+    <div class="conteneur suspendu__contenu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 8v4.5M12 16h.01" />
+      </svg>
+      <span>
+        <strong>Commandes suspendues.</strong>
+        {{ commerce().messageIndisponible }}
+      </span>
+    </div>
+  </div>
+}
+
+@if (accesActif()) {
+<main class="carte-produits">
+  <div class="conteneur">
+
+    @if (commerce().formules.length > 0) {
+      <section class="formules">
+        <h2 class="section__titre">
+          Nos formules
+          <span class="section__filet" aria-hidden="true"></span>
+        </h2>
+
+        <div class="formules__liste">
+          @for (formule of commerce().formules; track formule.id) {
+            <a
+              class="formule"
+              [routerLink]="
+                accepteCommandes()
+                  ? ['/client', commerce().id, 'formule', formule.id]
+                  : null
+              "
+              [class.formule--inerte]="!accepteCommandes()"
+            >
+              <span class="formule__visuel">
+                @if (formule.photo; as photo) {
+                  <img [src]="photo" [alt]="formule.nom" loading="lazy" decoding="async" />
+                } @else {
+                  <app-produit-illustration [type]="formule.illustration" />
+                }
+              </span>
+
+              <span class="formule__texte">
+                <span class="formule__nom">{{ formule.nom }}</span>
+                <span class="formule__description">{{ formule.description }}</span>
+                <span class="formule__prix">{{ formule.prixCentimes | prix }}</span>
+              </span>
+
+              <svg class="formule__fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+            </a>
+          }
+        </div>
+      </section>
+    }
+
+    <section class="catalogue">
+      <h2 class="section__titre">
+        À la carte
+        <span class="section__filet" aria-hidden="true"></span>
+      </h2>
+
+      <div class="filtres">
+        <div class="recherche">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5" />
+            <path d="M16 16l4.5 4.5" />
+          </svg>
+          <input
+            type="search"
+            class="recherche__saisie"
+            placeholder="Rechercher un produit"
+            aria-label="Rechercher un produit"
+            [value]="recherche()"
+            (input)="majRecherche($event)"
+          />
+        </div>
+
+        @if (!enRecherche()) {
+          <div class="rayons" role="tablist" aria-label="Rayons">
+            @for (categorie of categories(); track categorie) {
+              <button
+                type="button"
+                class="rayon"
+                role="tab"
+                [class.rayon--actif]="rayonActif() === categorie"
+                [attr.aria-selected]="rayonActif() === categorie"
+                (click)="choisirRayon(categorie)"
+              >
+                {{ categorie }}
+                <span class="rayon__compte">{{ compteRayon(categorie) }}</span>
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      @if (enRecherche()) {
+        <p class="resultat">
+          {{ produitsFiltres().length }} résultat{{ produitsFiltres().length > 1 ? 's' : '' }}
+          dans toute la carte
+          <button type="button" class="resultat__action" (click)="effacerRecherche()">
+            Revenir aux rayons
+          </button>
+        </p>
+      }
+
+      @if (produitsFiltres().length > 0) {
+        <div class="grille">
+          @for (produit of produitsFiltres(); track produit.id) {
+            <app-produit-carte
+              [produit]="produit"
+              [quantite]="quantite(produit.id)"
+              [desactive]="!accepteCommandes()"
+              (ajouter)="ajouter(produit)"
+              (retirer)="retirer(produit.id)"
+            />
+          }
+        </div>
+      } @else {
+        <p class="vide">
+          Aucun produit ne correspond.
+          <button type="button" class="vide__action" (click)="effacerRecherche()">
+            Revenir aux rayons
+          </button>
+        </p>
+      }
+    </section>
+
+  </div>
+</main>
+
+<footer class="barre">
+  <div class="conteneur barre__contenu">
+    <div class="barre__total">
+      <span class="barre__libelle">{{ libelleArticles() }}</span>
+      <span class="barre__montant">{{ totalCentimes() | prix }}</span>
+    </div>
+
+    @if (nombreArticles() > 0 && accepteCommandes()) {
+      <a class="barre__action" [routerLink]="['/client', commerce().id, 'creneau']">
+        Choisir un créneau
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 6l6 6-6 6" />
+        </svg>
+      </a>
+    } @else {
+      <button type="button" class="barre__action" disabled>Choisir un créneau</button>
+    }
+  </div>
+</footer>
+}

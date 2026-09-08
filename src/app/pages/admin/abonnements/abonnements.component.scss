@@ -1,0 +1,183 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: var(--c-fond);
+  color: var(--c-marque);
+}
+
+.ecran {
+  flex-grow: 1;
+  padding: 22px 0 32px;
+}
+
+.cartes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+
+  &__large {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 700px) {
+  .cartes {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .cartes__large {
+    grid-column: span 2;
+  }
+}
+
+.bloc {
+  margin-top: 28px;
+
+  &__titre {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 14px;
+    font-family: var(--police-titre);
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  &__filet {
+    flex-grow: 1;
+    height: 1px;
+    background: color-mix(in oklab, var(--c-marque) 16%, var(--c-fond));
+  }
+}
+
+.abonnement {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 12px;
+  padding: 16px;
+  border: 1px solid color-mix(in oklab, var(--c-marque) 12%, var(--c-fond));
+  border-radius: 18px;
+  background: #fff;
+
+  &__entete {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  &__nom {
+    margin: 0;
+    font-family: var(--police-titre);
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  &__depuis {
+    margin: 2px 0 0;
+    font-size: 12.5px;
+    color: color-mix(in oklab, var(--c-marque) 55%, var(--c-fond));
+  }
+
+  &__montant {
+    flex-shrink: 0;
+    font-family: var(--police-titre);
+    font-size: 16px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.ligne-reglage {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  border-top: 1px solid color-mix(in oklab, var(--c-marque) 10%, var(--c-fond));
+
+  &__libelle {
+    font-size: 13px;
+    font-weight: 600;
+    color: color-mix(in oklab, var(--c-marque) 70%, var(--c-fond));
+  }
+}
+
+.statuts {
+  display: flex;
+  gap: 6px;
+}
+
+.statut {
+  height: 38px;
+  padding: 0 14px;
+  border: 1.5px solid color-mix(in oklab, var(--c-marque) 16%, var(--c-fond));
+  border-radius: 19px;
+  background: transparent;
+  color: var(--c-marque);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &--retenu {
+    border-color: var(--c-accent);
+    background: color-mix(in oklab, var(--c-accent) 18%, var(--c-fond));
+    font-weight: 700;
+  }
+}
+
+.bascule {
+  height: 38px;
+  padding: 0 16px;
+  border: 1.5px solid #7d2b1c;
+  border-radius: 19px;
+  background: #fdf2ee;
+  color: #7d2b1c;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+
+  &--reglee {
+    border-color: var(--c-accent);
+    background: color-mix(in oklab, var(--c-accent) 18%, var(--c-fond));
+    color: color-mix(in oklab, var(--c-accent) 62%, #241c15);
+  }
+}
+
+.coupure {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid #7d2b1c;
+  border-radius: 12px;
+  background: #fdf2ee;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #5c1f14;
+
+  svg {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+  }
+}
+
+.encart {
+  margin: 28px 0 0;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in oklab, var(--c-accent) 40%, var(--c-fond));
+  border-radius: 14px;
+  background: color-mix(in oklab, var(--c-accent) 12%, var(--c-fond));
+  font-size: 13px;
+  line-height: 1.5;
+  color: color-mix(in oklab, var(--c-accent) 58%, #241c15);
+}

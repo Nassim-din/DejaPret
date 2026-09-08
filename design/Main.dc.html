@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Karla:wght@400;500;600;700&display=swap">
+  <style>
+    body { margin: 0; font-family: Karla, "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #B4552F; text-decoration: none; }
+    a:hover { color: #8E4223; }
+  </style>
+</helmet>
+
+<div style="width: 390px; height: 844px; background: #FAF5EC; color: #241C15; display: flex; flex-direction: column; overflow: hidden;">
+
+  <div style="height: 5px; background: {{accent}};"></div>
+
+  <div style="display: flex; flex-direction: column; gap: 9px; padding: 22px 20px 18px; background: #FFFFFF; border-bottom: 1px solid #E4D9C7;">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 21V8"/>
+        <path d="M12 9.5c0-2.2 1.3-3.6 3.4-4-.2 2.4-1.3 3.7-3.4 4Z"/>
+        <path d="M12 9.5c0-2.2-1.3-3.6-3.4-4 .2 2.4 1.3 3.7 3.4 4Z"/>
+        <path d="M12 14.5c0-2.2 1.3-3.6 3.4-4-.2 2.4-1.3 3.7-3.4 4Z"/>
+        <path d="M12 14.5c0-2.2-1.3-3.6-3.4-4 .2 2.4 1.3 3.7 3.4 4Z"/>
+      </svg>
+      <div style="font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #8A7A66; font-weight: 600;">Commande en ligne</div>
+    </div>
+    <div style="font-family: Newsreader, Georgia, serif; font-size: 31px; line-height: 1.08; font-weight: 500; letter-spacing: -0.01em;">Boulangerie du Panier</div>
+    <div style="font-size: 12.5px; color: #6B5D4E; line-height: 1.4;">12 rue du Panier, Marseille 2e &middot; Ouvert 6h30 &ndash; 19h30</div>
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 9px; padding: 11px 20px; background: #F3E7D6;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A6B3F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/>
+    </svg>
+    <div style="font-size: 12.5px; color: #6B4E28; font-weight: 500;">Commandez maintenant, retirez sans faire la queue.</div>
+  </div>
+
+  <div style="flex-grow: 1; display: flex; flex-direction: column; padding: 0 20px;">
+
+    <div style="font-family: Newsreader, Georgia, serif; font-size: 20px; font-weight: 500; padding: 18px 0 10px;">Ce matin</div>
+
+    <div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid #EADFCD;">
+      <div style="display: flex; flex-direction: column; gap: 4px; flex-grow: 1; min-width: 0;">
+        <div style="font-family: Newsreader, Georgia, serif; font-size: 17px; font-weight: 500; line-height: 1.25;">Baguette tradition</div>
+        <div style="display: flex; align-items: baseline; gap: 8px;">
+          <span style="font-size: 14px; font-weight: 700;">1,30&nbsp;&euro;</span>
+          <span style="font-size: 12px; color: #8A7A66;">cuite &agrave; 6h30 et 16h</span>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: flex-end; width: 112px;">
+        <div style="display: flex; align-items: center; background: #FFFFFF; border: 1px solid #DCCFB9; border-radius: 24px; height: 44px;">
+          <div style="width: 40px; height: 44px; display: flex; align-items: center; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#241C15" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+          </div>
+          <div style="min-width: 20px; text-align: center; font-size: 15px; font-weight: 700;">2</div>
+          <div style="width: 40px; height: 44px; display: flex; align-items: center; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid #EADFCD;">
+      <div style="display: flex; flex-direction: column; gap: 4px; flex-grow: 1; min-width: 0;">
+        <div style="font-family: Newsreader, Georgia, serif; font-size: 17px; font-weight: 500; line-height: 1.25;">Croissant au beurre</div>
+        <div style="display: flex; align-items: baseline; gap: 8px;">
+          <span style="font-size: 14px; font-weight: 700;">1,20&nbsp;&euro;</span>
+          <span style="font-size: 12px; color: #8A7A66;">beurre AOP</span>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: flex-end; width: 112px;">
+        <div style="display: flex; align-items: center; background: #FFFFFF; border: 1px solid #DCCFB9; border-radius: 24px; height: 44px;">
+          <div style="width: 40px; height: 44px; display: flex; align-items: center; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#241C15" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+          </div>
+          <div style="min-width: 20px; text-align: center; font-size: 15px; font-weight: 700;">1</div>
+          <div style="width: 40px; height: 44px; display: flex; align-items: center; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid #EADFCD;">
+      <div style="display: flex; flex-direction: column; gap: 4px; flex-grow: 1; min-width: 0;">
+        <div style="font-family: Newsreader, Georgia, serif; font-size: 17px; font-weight: 500; line-height: 1.25;">Navette fleur d&rsquo;oranger</div>
+        <div style="display: flex; align-items: baseline; gap: 8px;">
+          <span style="font-size: 14px; font-weight: 700;">1,10&nbsp;&euro;</span>
+          <span style="font-size: 12px; color: #8A7A66;">la sp&eacute;cialit&eacute; de la maison</span>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: flex-end; width: 112px;">
+        <div style="display: flex; align-items: center; background: #FFFFFF; border: 1px solid #DCCFB9; border-radius: 24px; height: 44px;">
+          <div style="width: 40px; height: 44px; display: flex; align-items: center; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#241C15" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+          </div>
+          <div style="min-width: 20px; text-align: center; font-size: 15px; font-weight: 700;">4</div>
+          <div style="width: 40px; height: 44px; display: flex; align-items: center; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid #EADFCD;">
+      <div style="display: flex; flex-direction: column; gap: 4px; flex-grow: 1; min-width: 0;">
+        <div style="font-family: Newsreader, Georgia, serif; font-size: 17px; font-weight: 500; line-height: 1.25;">Pain au chocolat</div>
+        <div style="display: flex; align-items: baseline; gap: 8px;">
+          <span style="font-size: 14px; font-weight: 700;">1,40&nbsp;&euro;</span>
+          <span style="font-size: 12px; color: #8A7A66;">chocolat noir</span>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: flex-end; width: 112px;">
+        <div style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid #DCCFB9; background: #FFFFFF; display: flex; align-items: center; justify-content: center;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid #EADFCD;">
+      <div style="display: flex; flex-direction: column; gap: 4px; flex-grow: 1; min-width: 0;">
+        <div style="font-family: Newsreader, Georgia, serif; font-size: 17px; font-weight: 500; line-height: 1.25;">Fougasse aux olives</div>
+        <div style="display: flex; align-items: baseline; gap: 8px;">
+          <span style="font-size: 14px; font-weight: 700;">3,50&nbsp;&euro;</span>
+          <span style="font-size: 12px; color: #8A7A66;">olives noires</span>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: flex-end; width: 112px;">
+        <div style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid #DCCFB9; background: #FFFFFF; display: flex; align-items: center; justify-content: center;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid #EADFCD; border-bottom: 1px solid #EADFCD;">
+      <div style="display: flex; flex-direction: column; gap: 4px; flex-grow: 1; min-width: 0;">
+        <div style="font-family: Newsreader, Georgia, serif; font-size: 17px; font-weight: 500; line-height: 1.25;">Chausson aux pommes</div>
+        <div style="display: flex; align-items: baseline; gap: 8px;">
+          <span style="font-size: 14px; font-weight: 700;">1,80&nbsp;&euro;</span>
+          <span style="font-size: 12px; color: #8A7A66;">pommes du Vaucluse</span>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: flex-end; width: 112px;">
+        <div style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid #DCCFB9; background: #FFFFFF; display: flex; align-items: center; justify-content: center;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 14px; padding: 14px 20px 22px; background: #FFFFFF; border-top: 1px solid #E4D9C7;">
+    <div style="display: flex; flex-direction: column; gap: 1px;">
+      <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #8A7A66; font-weight: 600;">7 articles</div>
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 25px; font-weight: 600; line-height: 1.1;">8,20&nbsp;&euro;</div>
+    </div>
+    <div style="flex-grow: 1; height: 52px; border-radius: 26px; background: {{accent}}; color: #FFFFFF; font-size: 15.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;">
+      Choisir un cr&eacute;neau
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#B4552F","options":["#B4552F","#1F5C4A","#2B4A7D","#8A2E3B"]}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#B4552F' };
+  }
+}
+</script>
+</body>
+</html>

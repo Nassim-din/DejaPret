@@ -99,38 +99,51 @@ téléphone en clair.
 - Nom retenu : **Déjà Prêt**
 - Domaines : `dejapret.fr` est pris (parqué, expire le 10/10/2026) ; `deja-pret.fr` est
   disponible. Marque à vérifier à l'INPI.
-- Démo cliquable réalisée (parcours client + commerçant, données d'exemple)
 - Premières visites de boulangeries faites : retours positifs, **aucun chiffre obtenu**
-- **Zéro client payant. Rien n'est validé.**
+- **Zéro client payant. Rien n'est validé commercialement.**
 
 ---
 
-## 7. Priorité actuelle — périmètre serré
+## 7. Phase actuelle — on construit le produit
 
-L'objectif n'est pas de finir le produit. L'objectif est de **décrocher un premier
-commerçant payant**. Tout le code écrit maintenant sert la vente, pas la production.
+Décision prise : on ne construit plus une démo de vente, on construit la V1.
+Cette section remplace l'ancienne consigne « périmètre serré, tout sert la vente ».
 
-### Ce qu'on construit maintenant
+Le fait qu'il n'y ait **aucun client payant** reste vrai et reste un risque : le produit
+se construit sans validation commerciale. Ce n'est pas une raison pour bâcler, c'en est
+une pour ne pas partir dans des fonctionnalités que personne n'a demandées.
 
-**Un générateur de démo personnalisée par commerce.** Un fichier de configuration par
-commerçant (nom, logo, couleurs, 6 produits avec prix, horaires, créneaux) produit une
-page de commande à sa marque, montrable sur téléphone pendant la visite.
+### Ce qui existe (front-end Angular)
 
-Critères :
-- Créer une nouvelle démo doit prendre **moins de 5 minutes** (éditer un fichier, rien d'autre)
-- Doit être parfaite sur mobile — c'est un téléphone tendu par-dessus un comptoir
-- Aucune dépendance à un backend, à Stripe ou à l'envoi de SMS : les étapes de paiement
-  et de confirmation sont simulées
-- Doit se charger vite sur un réseau mobile moyen dans une boutique
+- **Client** : carte du commerce, recherche et filtres par rayon, formules composées
+  étape par étape, choix du créneau, coordonnées, confirmation avec code à 4 chiffres.
+- **Commerçant** : commandes du jour (recherche, filtres, changement de statut avec
+  confirmation), tableau de bord, paramètres (infos, prix et noms de produits, horaires
+  jour par jour, couleurs, suspension des commandes).
+- **Admin** : commerces équipés, abonnements, volume traité.
 
-### Ce qu'on ne construit PAS maintenant
+### Ce qui manque, et qui est bloquant
 
-Pas de Stripe en production, pas d'envoi réel de SMS, pas d'authentification commerçant,
-pas de back-office complet, pas de CI/CD élaboré, pas de tests exhaustifs sur du code
-qui sera jeté. Tout ça vient **après** qu'un commerçant a payé — et sera construit pour
-lui.
+Ces points séparent « le front-end du produit » du produit :
 
-Si une demande dérive vers la V1 complète, dis-le au lieu de l'implémenter.
+1. **Pas d'API ni de base de données.** Les commandes vivent en mémoire (un
+   rafraîchissement les perd), les réglages du commerçant dans le `localStorage` d'un
+   seul appareil. C'est le prochain chantier, avant toute nouvelle fonctionnalité d'écran.
+2. **Pas d'authentification.** `/commercant/...` et `/admin` sont ouverts à qui a l'URL.
+3. **Pas de Stripe Connect.** Rien n'est encaissé. Les champs de carte sont décoratifs
+   et le signalent à l'écran.
+4. **RGPD non traité.** Pas de durée de conservation ni de purge des numéros de téléphone.
+
+### Règles qui tiennent toujours
+
+- Le multi-tenant reste la contrainte n°1 (voir section 5). Le commerce est identifié
+  par l'URL et résolu en **un seul endroit** : `CommerceService`. Aucun composant
+  n'importe un commerce en dur.
+- Ne pas inventer de données présentées comme réelles. L'espace admin affiche ce que
+  l'application sait réellement et signale explicitement ce qui demande l'API, plutôt
+  que d'afficher des chiffres d'audience fabriqués.
+- Périmètre avant élégance. Une demande qui n'est ni dans le produit décrit en
+  section 2 ni dans les manques bloquants ci-dessus mérite une objection avant du code.
 
 ---
 
@@ -148,11 +161,11 @@ Si une demande dérive vers la V1 complète, dis-le au lieu de l'implémenter.
 
 ## 9. Conventions de code
 
-> À compléter/corriger selon ce qui existe réellement dans le dépôt.
-
 - TypeScript strict activé
-- Composants Angular standalone, pas de NgModule sauf nécessité
-- Nommage des fichiers en kebab-case
+- Angular 18, composants **standalone**, `ChangeDetectionStrategy.OnPush`, signaux
+  (`signal`, `computed`, `input()`, `output()`) — pas de NgModule
+- Un commerce = un fichier dans `src/app/merchants/`, déclaré dans `index.ts`
+- Nommage des fichiers en kebab-case, code et commentaires en français
 - Commits en français, format court : `feat: …`, `fix: …`, `chore: …`
 - Pas de secrets dans le dépôt (clés Stripe, identifiants SMS) — variables d'environnement
 - Textes de l'interface en français, prévoir la sortie des chaînes en dur dès le début

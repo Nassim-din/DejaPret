@@ -40,3 +40,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Canvas de design généré (2,5 Mo) : régénérable depuis les .dc.html du dossier
+/design/deja-pret-page-commande.html

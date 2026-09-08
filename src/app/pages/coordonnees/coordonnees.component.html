@@ -1,0 +1,107 @@
+<app-entete-etape
+  titre="Vos coordonnées"
+  [retour]="['/client', commerce().id, 'creneau']"
+/>
+
+<main class="etape">
+  <div class="conteneur etape__contenu">
+
+    <section class="recap">
+      <div class="recap__ligne">
+        <span class="recap__nom">{{ commerce().nom }}</span>
+        <strong class="recap__total">{{ totalCentimes() | prix }}</strong>
+      </div>
+      <hr class="recap__filet" />
+      <p class="recap__retrait">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 7.5V12l3 2" />
+        </svg>
+        Retrait {{ libelleJour().toLowerCase() }} à <strong>{{ commande.heure() }}</strong>
+        · {{ libelleArticles() }}
+      </p>
+    </section>
+
+    <div class="champ">
+      <label class="champ__libelle" for="prenom">Prénom</label>
+      <input
+        id="prenom"
+        class="champ__saisie"
+        type="text"
+        autocomplete="given-name"
+        placeholder="Sofia"
+        [value]="commande.prenom()"
+        (input)="majPrenom($event)"
+      />
+    </div>
+
+    <div class="champ">
+      <label class="champ__libelle" for="telephone">Numéro de téléphone</label>
+      <input
+        id="telephone"
+        class="champ__saisie"
+        type="tel"
+        inputmode="tel"
+        autocomplete="tel"
+        placeholder="06 12 34 56 78"
+        [value]="commande.telephone()"
+        (input)="majTelephone($event)"
+      />
+      <p class="champ__aide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="6" y="3" width="12" height="18" rx="2.5" />
+          <path d="M10.5 18.5h3" />
+        </svg>
+        Pour recevoir votre code de retrait par SMS.
+      </p>
+    </div>
+
+    <section class="paiement">
+      <h2 class="champ__libelle">Paiement</h2>
+
+      <!-- Démonstration : ces champs sont décoratifs, rien n'est saisi
+           ni envoyé nulle part. -->
+      <div class="paiement__carte" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="5.5" width="18" height="13" rx="2.5" />
+          <path d="M3 10h18" />
+        </svg>
+        <span>1234 5678 9012 3456</span>
+      </div>
+      <div class="paiement__ligne" aria-hidden="true">
+        <span class="paiement__case">MM / AA</span>
+        <span class="paiement__case">CVC</span>
+      </div>
+      <p class="paiement__mention">
+        Le paiement en ligne n’est pas encore branché : ces champs ne sont pas
+        actifs et rien n’est transmis.
+      </p>
+    </section>
+
+    <p class="rgpd">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="5" y="11" width="14" height="9" rx="2.2" />
+        <path d="M8.2 11V8a3.8 3.8 0 0 1 7.6 0v3" />
+      </svg>
+      Vos coordonnées servent uniquement à cette commande et sont effacées ensuite.
+    </p>
+
+  </div>
+</main>
+
+<footer class="barre">
+  <div class="conteneur barre__contenu">
+    <div class="barre__total">
+      <span class="barre__libelle">À régler</span>
+      <span class="barre__montant">{{ totalCentimes() | prix }}</span>
+    </div>
+
+    <button type="button" class="barre__action" [disabled]="!formulaireValide()" (click)="payer()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="5" y="11" width="14" height="9" rx="2.2" />
+        <path d="M8.2 11V8a3.8 3.8 0 0 1 7.6 0v3" />
+      </svg>
+      Payer {{ totalCentimes() | prix }}
+    </button>
+  </div>
+</footer>

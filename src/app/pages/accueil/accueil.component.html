@@ -1,0 +1,96 @@
+<main class="hub">
+  <div class="conteneur hub__contenu">
+
+    <div class="marque">
+      <p class="marque__eyebrow">
+        <span class="marque__filet" aria-hidden="true"></span>
+        Commande et retrait
+      </p>
+      <p class="marque__nom">Déjà Prêt</p>
+      <p class="marque__baseline">Commandez à l’avance, ne faites plus la queue.</p>
+    </div>
+
+    <section>
+      <h1 class="question">Quelle boutique ?</h1>
+
+      <div class="boutiques" role="group" aria-label="Choisir une boutique">
+        @for (item of commerces; track item.id) {
+          <button
+            type="button"
+            class="boutique"
+            [class.boutique--active]="commerceId() === item.id"
+            [attr.aria-pressed]="commerceId() === item.id"
+            (click)="choisirCommerce(item.id)"
+          >
+            <span class="boutique__nom">{{ item.nom }}</span>
+            <span class="boutique__adresse">{{ item.adresse }}</span>
+          </button>
+        }
+      </div>
+    </section>
+
+    <section>
+      <h2 class="question">Vous êtes ?</h2>
+
+      <nav class="choix">
+        <a class="carte" [routerLink]="['/client', commerceId()]">
+          <span class="carte__icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 8h12l1 12H5L6 8Z" />
+              <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+            </svg>
+          </span>
+          <span class="carte__texte">
+            <span class="carte__titre">Client</span>
+            <span class="carte__detail">
+              Vous commandez et vous récupérez sans faire la queue.
+            </span>
+          </span>
+          <svg class="carte__fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </a>
+
+        <a class="carte" [routerLink]="['/commercant', commerceId()]">
+          <span class="carte__icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 9h16v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9Z" />
+              <path d="M3 9l1.6-4.6A1 1 0 0 1 5.5 4h13a1 1 0 0 1 .9.4L21 9" />
+              <path d="M9.5 20v-5h5v5" />
+            </svg>
+          </span>
+          <span class="carte__texte">
+            <span class="carte__titre">Commerçant</span>
+            <span class="carte__detail">
+              Vos commandes du jour, votre tableau de bord et vos réglages.
+            </span>
+          </span>
+          <svg class="carte__fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </a>
+
+        <a class="carte" routerLink="/admin">
+          <span class="carte__icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 7h14M5 12h14M5 17h14" />
+              <circle cx="9" cy="7" r="2" />
+              <circle cx="15" cy="12" r="2" />
+              <circle cx="10" cy="17" r="2" />
+            </svg>
+          </span>
+          <span class="carte__texte">
+            <span class="carte__titre">Administration</span>
+            <span class="carte__detail">
+              Vue plateforme : commerces équipés, abonnements et volume traité.
+            </span>
+          </span>
+          <svg class="carte__fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </a>
+      </nav>
+    </section>
+
+  </div>
+</main>

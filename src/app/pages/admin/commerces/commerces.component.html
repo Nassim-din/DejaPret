@@ -1,0 +1,174 @@
+<app-entete-admin titre="Commerces" />
+<app-nav-admin />
+
+<main class="ecran">
+  <div class="conteneur">
+
+    <div class="recherche">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="6.5" />
+        <path d="M16 16l4.5 4.5" />
+      </svg>
+      <input
+        type="search"
+        class="recherche__saisie"
+        placeholder="Rechercher un commerce"
+        aria-label="Rechercher un commerce"
+        [value]="recherche()"
+        (input)="majRecherche($event)"
+      />
+    </div>
+
+    @for (item of commerces(); track item.commerce.id) {
+      <article class="fiche">
+        <header class="fiche__entete">
+          <app-commerce-avatar
+            class="fiche__avatar"
+            [nom]="item.commerce.nom"
+            [photo]="item.commerce.photoProfil"
+            [couleurs]="item.commerce.couleurs"
+          />
+
+          <div class="fiche__identite">
+            <h2 class="fiche__nom">{{ item.commerce.nom }}</h2>
+            <p class="fiche__adresse">{{ item.commerce.adresse }}</p>
+          </div>
+
+          <div class="fiche__etiquettes">
+            <span class="etiquette" [class]="'etiquette--' + item.commerce.abonnement.statut">
+              {{ libelleAbonnement(item.commerce.abonnement.statut) }}
+            </span>
+            <span
+              class="etiquette etiquette--commandes"
+              [class.etiquette--ferme]="!item.commerce.accepteCommandes"
+            >
+              {{ item.commerce.accepteCommandes ? 'Ouvert aux commandes' : 'Commandes suspendues' }}
+            </span>
+          </div>
+        </header>
+
+        <dl class="fiche__chiffres">
+          <div>
+            <dt>Commandes du jour</dt>
+            <dd>{{ item.commandes }}</dd>
+          </div>
+          <div>
+            <dt>Articles</dt>
+            <dd>{{ item.articles }}</dd>
+          </div>
+          <div>
+            <dt>Volume</dt>
+            <dd>{{ item.volumeCentimes | prix }}</dd>
+          </div>
+          <div>
+            <dt>Panier moyen</dt>
+            <dd>{{ item.panierMoyenCentimes | prix }}</dd>
+          </div>
+        </dl>
+
+        <p class="fiche__carte">
+          {{ item.commerce.produits.length }} produits ·
+          {{ item.commerce.formules.length }} formules ·
+          identifiant <code>{{ item.commerce.id }}</code>
+        </p>
+
+        <footer class="fiche__liens">
+          <a class="lien" [routerLink]="['/client', item.commerce.id]">
+            Page client
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 6l6 6-6 6" />
+            </svg>
+          </a>
+          <a class="lien" [routerLink]="['/commercant', item.commerce.id]">
+            Espace commerçant
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 6l6 6-6 6" />
+            </svg>
+          </a>
+
+          <button
+            type="button"
+            class="lien lien--icone"
+            [class.lien--ouvert]="apparenceOuverte() === item.commerce.id"
+            [attr.aria-expanded]="apparenceOuverte() === item.commerce.id"
+            [attr.aria-label]="'Apparence de ' + item.commerce.nom"
+            title="Apparence"
+            (click)="basculerApparence(item.commerce.id)"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3a9 9 0 1 0 0 18c1 0 1.8-.8 1.8-1.8 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.8 1.8-1.8H16a5 5 0 0 0 5-5c0-3.9-4-7-9-7Z" />
+              <circle cx="7.5" cy="11.5" r="1.2" />
+              <circle cx="11" cy="7.5" r="1.2" />
+              <circle cx="15.5" cy="9.5" r="1.2" />
+            </svg>
+            Apparence
+          </button>
+        </footer>
+
+        @if (apparenceOuverte() === item.commerce.id) {
+          <section class="apparence">
+            <div
+              class="apercu"
+              [style.background]="item.commerce.couleurs.fond"
+              [style.border-color]="item.commerce.couleurs.marque"
+            >
+              <div class="apercu__banniere" [style.background]="item.commerce.couleurs.marque">
+                <app-commerce-avatar
+                  class="apercu__avatar"
+                  [nom]="item.commerce.nom"
+                  [photo]="item.commerce.photoProfil"
+                  [couleurs]="item.commerce.couleurs"
+                />
+                <span class="apercu__texte">
+                  <span class="apercu__accroche" [style.color]="item.commerce.couleurs.accent">
+                    {{ item.commerce.accroche }}
+                  </span>
+                  <span class="apercu__nom" [style.color]="item.commerce.couleurs.fond">
+                    {{ item.commerce.nom }}
+                  </span>
+                </span>
+              </div>
+              <div class="apercu__corps">
+                <span class="apercu__tuile" [style.background]="item.commerce.couleurs.surface"></span>
+                <span class="apercu__tuile" [style.background]="item.commerce.couleurs.surface"></span>
+                <span
+                  class="apercu__bouton"
+                  [style.background]="item.commerce.couleurs.accent"
+                  [style.color]="item.commerce.couleurs.marque"
+                >
+                  Commander
+                </span>
+              </div>
+            </div>
+
+            <div class="couleurs">
+              @for (champ of champsCouleur; track champ.cle) {
+                <label class="couleur">
+                  <span class="couleur__libelle">{{ champ.libelle }}</span>
+                  <input
+                    type="color"
+                    [value]="item.commerce.couleurs[champ.cle]"
+                    [attr.aria-label]="champ.libelle + ' de ' + item.commerce.nom"
+                    (input)="majCouleur(item.commerce.id, champ.cle, $any($event.target).value)"
+                  />
+                  <span class="couleur__code">{{ item.commerce.couleurs[champ.cle] }}</span>
+                </label>
+              }
+            </div>
+
+            <button
+              type="button"
+              class="apparence__reinit"
+              (click)="reinitialiserCouleurs(item.commerce.id)"
+            >
+              Couleurs d’origine
+            </button>
+          </section>
+        }
+      </article>
+    } @empty {
+      <p class="vide">Aucun commerce ne correspond.</p>
+    }
+
+  </div>
+</main>

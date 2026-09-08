@@ -1,0 +1,53 @@
+<article class="carte" [class.carte--inerte]="desactive()">
+  <div class="visuel">
+    @if (produit().photo; as photo) {
+      <img class="photo" [src]="photo" [alt]="produit().nom" loading="lazy" decoding="async" />
+    } @else {
+      <app-produit-illustration class="dessin" [type]="produit().illustration" />
+    }
+
+    @if (!desactive()) {
+      @if (quantite() > 0) {
+        <div class="compteur">
+          <button
+            type="button"
+            class="compteur__bouton"
+            [attr.aria-label]="'Retirer un ' + produit().nom"
+            (click)="retirer.emit()"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+              <path d="M5 12h14" />
+            </svg>
+          </button>
+
+          <span class="compteur__valeur" aria-live="polite">{{ quantite() }}</span>
+
+          <button
+            type="button"
+            class="compteur__bouton"
+            [attr.aria-label]="'Ajouter un ' + produit().nom"
+            (click)="ajouter.emit()"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </button>
+        </div>
+      } @else {
+        <button
+          type="button"
+          class="ajout"
+          [attr.aria-label]="'Ajouter un ' + produit().nom"
+          (click)="ajouter.emit()"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+        </button>
+      }
+    }
+  </div>
+
+  <h3 class="nom">{{ produit().nom }}</h3>
+  <p class="prix">{{ produit().prixCentimes | prix }}</p>
+</article>

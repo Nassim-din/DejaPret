@@ -1,0 +1,34 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 390, "h": 844, "title": "A · Produits" },
+    { "file": "Creneau.dc.html", "x": 470, "y": 0, "w": 390, "h": 844, "title": "A · Créneau" },
+    { "file": "Coordonnees.dc.html", "x": 940, "y": 0, "w": 390, "h": 844, "title": "A · Coordonnées" },
+    { "file": "Confirmation.dc.html", "x": 1410, "y": 0, "w": 390, "h": 844, "title": "A · Confirmation" },
+    { "file": "DirectionB.dc.html", "x": 0, "y": 1160, "w": 390, "h": 844, "title": "B · Comptoir" },
+    { "file": "DirectionC.dc.html", "x": 470, "y": 1160, "w": 390, "h": 844, "title": "C · Vitrine" }
+  ],
+  "annotations": [
+    {
+      "id": "direction-a",
+      "x": -470,
+      "y": 0,
+      "w": 420,
+      "text": "DIRECTION A — « Ardoise »\n\nChaleureux, artisanal, typographique. La marque du commerçant tient dans deux réglages : sa couleur et son nom.\n\nPour : aucune photo nécessaire, donc une démo se monte en éditant un fichier texte — la règle des 5 minutes tient.\n\nContre : moins « appétissant » qu'une carte avec des photos. Un commerçant peut le trouver trop sobre.\n\nLe parcours complet est décliné dans cette direction : produits → créneau → coordonnées → confirmation."
+    },
+    {
+      "id": "direction-b",
+      "x": 0,
+      "y": 950,
+      "w": 400,
+      "text": "DIRECTION B — « Comptoir »\n\nUtilitaire et dense. Les 6 produits ET le choix du créneau tiennent sur un seul écran, sans scroller : la commande se fait en 3 gestes.\n\nPour : la vitesse est l'argument de vente. C'est aussi la direction la plus rapide à charger.\n\nContre : ça ressemble à un outil, pas à la boutique du commerçant. Le « c'est à ma marque » passe moins bien."
+    },
+    {
+      "id": "direction-c",
+      "x": 470,
+      "y": 950,
+      "w": 400,
+      "text": "DIRECTION C — « Vitrine »\n\nCartes produit larges, l'appétit d'abord. Les visuels sont ici des dessins au trait, en attendant de vraies photos.\n\nPour : c'est la plus vendeuse au premier coup d'œil, et la plus proche d'une devanture.\n\nContre : elle réclame de vraies photos du commerçant. Ça fait sauter la règle des 5 minutes par démo — c'est le vrai coût de cette direction."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}

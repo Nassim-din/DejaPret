@@ -1,0 +1,182 @@
+<app-entete-commercant />
+<app-nav-commercant />
+<app-alerte-commande />
+
+<main class="bord">
+  <div class="conteneur">
+
+    <section class="section">
+      <h2 class="section__titre">
+        Aujourd’hui
+        <span class="section__filet" aria-hidden="true"></span>
+      </h2>
+
+      <div class="resume">
+        <div class="resume__principal">
+          <p class="resume__libelle">Encaissé d’avance</p>
+          <p class="resume__valeur">{{ chiffreAffaires() | prix }}</p>
+          <p class="resume__note">
+            {{ commandes().length }} commande{{ commandes().length > 1 ? 's' : '' }} ·
+            {{ articlesVendus() }} article{{ articlesVendus() > 1 ? 's' : '' }} ·
+            panier moyen {{ panierMoyen() | prix }}
+          </p>
+        </div>
+
+        <div class="jauge">
+          <p class="jauge__titre">
+            @if (resteAPreparer() > 0) {
+              {{ resteAPreparer() }} commande{{ resteAPreparer() > 1 ? 's' : '' }} à préparer
+            } @else {
+              Tout est préparé
+            }
+          </p>
+
+          <div class="jauge__barre" role="presentation">
+            @for (etape of avancement(); track etape.cle) {
+              @if (etape.nombre > 0) {
+                <span
+                  class="jauge__part"
+                  [class]="'jauge__part--' + etape.cle"
+                  [style.width.%]="etape.part"
+                ></span>
+              }
+            }
+          </div>
+
+          <ul class="jauge__legende">
+            @for (etape of avancement(); track etape.cle) {
+              <li>
+                <span class="pastille" [class]="'pastille--' + etape.cle" aria-hidden="true"></span>
+                {{ etape.libelle }} <strong>{{ etape.nombre }}</strong>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    @if (produitsDuJour().length > 0) {
+      <section class="section">
+        <h2 class="section__titre">
+          Ce qui part le plus
+          <span class="section__filet" aria-hidden="true"></span>
+        </h2>
+
+        <ul class="classement">
+          @for (produit of produitsDuJour(); track produit.nom) {
+            <li class="produit">
+              <span class="produit__quantite">{{ produit.quantite }}</span>
+              <span class="produit__corps">
+                <span class="produit__nom">{{ produit.nom }}</span>
+                <span class="produit__piste">
+                  <span class="produit__barre" [style.width.%]="produit.part"></span>
+                </span>
+              </span>
+              <span class="produit__total">{{ produit.totalCentimes | prix }}</span>
+            </li>
+          }
+        </ul>
+      </section>
+    }
+
+    @if (parHeure().length > 0) {
+      <section class="section">
+        <h2 class="section__titre">
+          Vos coups de feu
+          <span class="section__filet" aria-hidden="true"></span>
+        </h2>
+
+        <ul class="histogramme">
+          @for (tranche of parHeure(); track tranche.tranche) {
+            <li class="tranche">
+              <span class="tranche__heure">{{ tranche.tranche }}</span>
+              <span class="tranche__piste">
+                <span class="tranche__barre" [style.width.%]="tranche.part"></span>
+              </span>
+              <span class="tranche__nombre">{{ tranche.nombre }}</span>
+            </li>
+          }
+        </ul>
+      </section>
+    }
+
+    <section class="section">
+      <h2 class="section__titre">
+        Déjà vendu pour la suite
+        <span class="section__filet" aria-hidden="true"></span>
+      </h2>
+
+      @if (aVenir().length > 0) {
+        <div class="avenir">
+          <div class="avenir__chiffres">
+            <div class="mini">
+              <span class="mini__valeur">{{ aVenir().length }}</span>
+              <span class="mini__libelle">Commandes</span>
+            </div>
+            <div class="mini">
+              <span class="mini__valeur">{{ articlesAVenir() }}</span>
+              <span class="mini__libelle">Articles</span>
+            </div>
+            <div class="mini">
+              <span class="mini__valeur">{{ caAVenir() | prix }}</span>
+              <span class="mini__libelle">Encaissé</span>
+            </div>
+          </div>
+
+          <ul class="jours">
+            @for (jour of joursAVenir(); track jour.date) {
+              <li class="jours__ligne">
+                <span class="jours__libelle">{{ jour.libelle }}</span>
+                <span class="jours__nombre">
+                  {{ jour.nombre }} commande{{ jour.nombre > 1 ? 's' : '' }}
+                </span>
+                <span class="jours__montant">{{ jour.totalCentimes | prix }}</span>
+              </li>
+            }
+          </ul>
+
+          @if (produitsAVenir().length > 0) {
+            <div class="apreparer">
+              <p class="apreparer__titre">À prévoir</p>
+              <ul class="apreparer__liste">
+                @for (produit of produitsAVenir(); track produit.nom) {
+                  <li>
+                    <strong>{{ produit.quantite }}</strong> {{ produit.nom }}
+                  </li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="section__vide">
+          Aucune commande n’est encore passée pour les jours suivants.
+        </p>
+      }
+    </section>
+
+    <section class="section">
+      <h2 class="section__titre">
+        Clients réguliers
+        <span class="section__filet" aria-hidden="true"></span>
+      </h2>
+
+      @if (clientsReguliers().length > 0) {
+        <ul class="reguliers">
+          @for (client of clientsReguliers(); track client.prenom) {
+            <li class="regulier">
+              <span class="regulier__prenom">{{ client.prenom }}</span>
+              <span class="regulier__nombre">{{ client.nombre }} commandes</span>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="section__vide">
+          Personne n’a encore commandé deux fois. Ceux qui reviennent
+          apparaîtront ici.
+        </p>
+      }
+    </section>
+
+  </div>
+</main>
